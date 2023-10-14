@@ -1,13 +1,14 @@
 package com.github.cwramirezg.misrecetas.home.ui.home
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.cwramirezg.misrecetas.home.domain.home.usecase.HomeUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,8 +17,8 @@ class HomeViewModel @Inject constructor(
     private val homeUseCases: HomeUseCases
 ) : ViewModel() {
 
-    var state by mutableStateOf(HomeState())
-        private set
+    private val _state = MutableStateFlow(HomeState())
+    val state: StateFlow<HomeState> = _state.asStateFlow()
 
     private var currentDayJob: Job? = null
 
@@ -36,8 +37,10 @@ class HomeViewModel @Inject constructor(
     private fun getRecetas() {
         currentDayJob?.cancel()
         currentDayJob = viewModelScope.launch {
-            homeUseCases.getRecetas().collect {
-                state = state.copy(
+            _state.value = HomeState(loading = true)
+            homeUseCases.getRecetas().collectLatest {
+                _state.value = _state.value.copy(
+                    loading = false,
                     recetas = it
                 )
             }

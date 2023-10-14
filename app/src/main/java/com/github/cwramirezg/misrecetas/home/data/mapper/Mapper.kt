@@ -1,9 +1,10 @@
 package com.github.cwramirezg.misrecetas.home.data.mapper
 
 import com.github.cwramirezg.misrecetas.home.data.remote.dto.RecetaResponse
+import com.github.cwramirezg.misrecetas.home.data.remote.dto.Respuesta
 import com.github.cwramirezg.misrecetas.home.domain.model.Receta
 
-fun RecetaResponse.toDomain(): Receta {
+fun Respuesta.toDomain(): Receta {
     return Receta(
         id = id,
         nombre = nombre,
@@ -14,6 +15,6 @@ fun RecetaResponse.toDomain(): Receta {
     )
 }
 
-fun List<RecetaResponse>.toDomain(): List<Receta> {
-    return this.map { it.toDomain() }
+fun RecetaResponse.toDomain(): List<Receta> {
+    return this.respuesta.map { it.toDomain() }
 }
