@@ -27,11 +27,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.github.cwramirezg.misrecetas.home.domain.model.Receta
+import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    onClickReceta: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -62,7 +64,7 @@ fun HomeScreen(
                         RecetaItem(
                             receta = receta,
                             onClick = {
-                                viewModel.onEvent(HomeEvent.OnClickReceta(receta))
+                                onClickReceta(it)
                             }
                         )
                     }
@@ -73,9 +75,12 @@ fun HomeScreen(
 }
 
 @Composable
-fun RecetaItem(receta: Receta, onClick: () -> Unit) {
+fun RecetaItem(receta: Receta, onClick: (String) -> Unit) {
     Column(
-        modifier = Modifier.clickable(onClick = onClick)
+        modifier = Modifier.clickable {
+            Timber.d("Receta: ${receta.id}")
+            onClick(receta.id)
+        }
     ) {
         Box {
             AsyncImage(

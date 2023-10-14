@@ -11,5 +11,6 @@ class SplashActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         splash.setKeepOnScreenCondition { true }
         startActivity(MainActivity.newInstance(this))
+        finish()
     }
 }

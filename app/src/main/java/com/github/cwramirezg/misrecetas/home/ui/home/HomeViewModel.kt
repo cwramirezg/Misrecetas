@@ -4,11 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.cwramirezg.misrecetas.home.domain.home.usecase.HomeUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,9 +16,7 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(HomeState())
-    val state: StateFlow<HomeState> = _state.asStateFlow()
-
-    private var currentDayJob: Job? = null
+    val state = _state.asStateFlow()
 
     init {
         getRecetas()
@@ -35,14 +31,11 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getRecetas() {
-        currentDayJob?.cancel()
-        currentDayJob = viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _state.value = HomeState(loading = true)
-            homeUseCases.getRecetas().collectLatest {
-                _state.value = _state.value.copy(
-                    loading = false,
-                    recetas = it
-                )
+            homeUseCases.requestRecetas()
+            homeUseCases.getRecetas().collect {
+                _state.value = HomeState(recetas = it)
             }
         }
     }
