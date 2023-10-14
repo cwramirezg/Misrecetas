@@ -54,7 +54,7 @@ fun MyReceta(
     onClick: (String) -> Unit
 ) {
     Column(
-        modifier = modifier.clickable { onClick(receta.gps) }
+        modifier = modifier.clickable { onClick(receta.id) }
     ) {
         Box {
             AsyncImage(

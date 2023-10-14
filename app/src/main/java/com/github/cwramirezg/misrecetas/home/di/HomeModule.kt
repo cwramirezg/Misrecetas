@@ -11,6 +11,7 @@ import com.github.cwramirezg.misrecetas.home.domain.detail.usecase.GetRecetaById
 import com.github.cwramirezg.misrecetas.home.domain.home.usecase.GetRecetasUseCase
 import com.github.cwramirezg.misrecetas.home.domain.home.usecase.HomeUseCases
 import com.github.cwramirezg.misrecetas.home.domain.home.usecase.RequestRecetas
+import com.github.cwramirezg.misrecetas.home.domain.map.usecase.MapUseCases
 import com.github.cwramirezg.misrecetas.home.domain.repository.HomeRepository
 import dagger.Module
 import dagger.Provides
@@ -41,6 +42,14 @@ object HomeModule {
     fun provideDetailUseCases(repository: HomeRepository): DetailUseCases {
         return DetailUseCases(
             getRecetaByIdUseCase = GetRecetaByIdUseCase(repository = repository)
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideMapUseCases(repository: HomeRepository): MapUseCases {
+        return MapUseCases(
+            getRecetaByIdUseCase = com.github.cwramirezg.misrecetas.home.domain.map.usecase.GetRecetaByIdUseCase(repository = repository)
         )
     }
 

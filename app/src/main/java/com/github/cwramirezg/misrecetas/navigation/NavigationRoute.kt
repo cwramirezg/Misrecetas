@@ -5,4 +5,5 @@ sealed class NavigationRoute(
 ) {
     object Home : NavigationRoute("home")
     object Detail : NavigationRoute("detail")
+    object Map : NavigationRoute("map")
 }

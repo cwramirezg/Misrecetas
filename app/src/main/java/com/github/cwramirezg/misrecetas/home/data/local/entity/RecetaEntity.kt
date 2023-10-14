@@ -10,6 +10,7 @@ data class RecetaEntity(
     val nombre: String,
     val descripcion: String,
     val localizacion: String,
-    val gps: String,
+    val lat: Double,
+    val lon: Double,
     val urlImagen: String
 )

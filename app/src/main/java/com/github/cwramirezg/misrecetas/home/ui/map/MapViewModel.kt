@@ -1,34 +1,36 @@
-package com.github.cwramirezg.misrecetas.home.ui.detail
+package com.github.cwramirezg.misrecetas.home.ui.map
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.github.cwramirezg.misrecetas.home.domain.detail.usecase.DetailUseCases
+import com.github.cwramirezg.misrecetas.home.domain.map.usecase.MapUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailViewModel @Inject constructor(
+class MapViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val detailUseCases: DetailUseCases
+    private val mapUseCases: MapUseCases
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(DetailState())
+    private val _state = MutableStateFlow(MapState())
     val state = _state.asStateFlow()
 
     init {
         val id = savedStateHandle.get<String>("id") ?: ""
         if (id.isNotEmpty()) {
             viewModelScope.launch(Dispatchers.IO) {
-                val receta = detailUseCases.getRecetaByIdUseCase(id)
-                _state.value = _state.value.copy(
-                    receta = receta
-                )
+                val receta = mapUseCases.getRecetaByIdUseCase(id)
+                if (receta.lat != 0.0 && receta.lon != 0.0) {
+                    _state.value = _state.value.copy(
+                        lat = receta.lat,
+                        lon = receta.lon
+                    )
+                }
             }
         }
     }

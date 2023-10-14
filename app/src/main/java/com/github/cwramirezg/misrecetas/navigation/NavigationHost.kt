@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.github.cwramirezg.misrecetas.home.ui.detail.DetailScreen
 import com.github.cwramirezg.misrecetas.home.ui.home.HomeScreen
+import com.github.cwramirezg.misrecetas.home.ui.map.MapScreen
 
 @Composable
 fun NavigationHost(
@@ -21,13 +22,13 @@ fun NavigationHost(
     ) {
         composable(NavigationRoute.Home.route) {
             HomeScreen(
-                onClickReceta = {
-                    id -> navHostController.navigate("${NavigationRoute.Detail.route}?id=$id")
+                onClickReceta = { id ->
+                    navHostController.navigate("${NavigationRoute.Detail.route}?id=$id")
                 }
             )
         }
         composable(
-            "${NavigationRoute.Detail.route}?id={id}",
+            route = "${NavigationRoute.Detail.route}?id={id}",
             arguments = listOf(
                 navArgument("id") {
                     type = NavType.StringType
@@ -38,7 +39,23 @@ fun NavigationHost(
         ) {
             DetailScreen(
                 onClickBack = { navHostController.popBackStack() },
-                onClickMap = {}
+                onClickMap = { id ->
+                    navHostController.navigate("${NavigationRoute.Map.route}?id=$id")
+                }
+            )
+        }
+        composable(
+            route = "${NavigationRoute.Map.route}?id={id}",
+            arguments = listOf(
+                navArgument("id") {
+                    type = NavType.StringType
+                    nullable = true
+                    defaultValue = ""
+                }
+            )
+        ) {
+            MapScreen(
+                onClickBack = { navHostController.popBackStack() }
             )
         }
     }

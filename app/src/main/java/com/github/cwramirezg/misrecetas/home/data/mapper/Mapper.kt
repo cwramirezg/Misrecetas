@@ -11,7 +11,8 @@ fun Respuesta.toDomain(): Receta {
         nombre = nombre,
         descripcion = descripcion,
         localizacion = localizacion,
-        gps = gps,
+        lat = lat,
+        lon = lon,
         urlImagen = urlImagen
     )
 }
@@ -26,7 +27,8 @@ fun RecetaEntity.toDomain(): Receta {
         nombre = nombre,
         descripcion = descripcion,
         localizacion = localizacion,
-        gps = gps,
+        lat = lat,
+        lon = lon,
         urlImagen = urlImagen
     )
 }
@@ -37,7 +39,8 @@ fun Receta.toLocal(): RecetaEntity {
         nombre = nombre,
         descripcion = descripcion,
         localizacion = localizacion,
-        gps = gps,
+        lat = lat,
+        lon = lon,
         urlImagen = urlImagen
     )
 }

@@ -7,7 +7,8 @@ data class Receta(
     val nombre: String,
     val descripcion: String,
     val localizacion: String,
-    val gps: String,
+    val lat: Double,
+    val lon: Double,
     val urlImagen: String
 ) {
     @Ignore
@@ -16,7 +17,8 @@ data class Receta(
         nombre = "",
         descripcion = "",
         localizacion = "",
-        gps = "",
+        lat = 0.0,
+        lon = 0.0,
         urlImagen = ""
     )
 }
