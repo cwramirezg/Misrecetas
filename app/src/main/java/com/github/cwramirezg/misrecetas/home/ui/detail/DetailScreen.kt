@@ -1,26 +1,34 @@
 package com.github.cwramirezg.misrecetas.home.ui.detail
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import coil.request.CachePolicy
+import coil.request.ImageRequest
+import com.github.cwramirezg.misrecetas.R
 import com.github.cwramirezg.misrecetas.home.domain.model.Receta
+import com.github.cwramirezg.misrecetas.home.ui.components.TopAppBarView
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(
     viewModel: DetailViewModel = hiltViewModel(),
@@ -34,7 +42,13 @@ fun DetailScreen(
         color = MaterialTheme.colorScheme.background
     ) {
         Scaffold(
-            topBar = { TopAppBar(title = { Text(text = "Detalle de la receta") }) }
+            topBar = {
+                TopAppBarView(
+                    textTitle = state.receta.nombre,
+                    onClick = { onClickBack() },
+                    imageVector = Icons.Default.ArrowBack
+                )
+            }
         ) { padding ->
             if (state.receta.id.isNotEmpty()) {
                 MyReceta(
@@ -53,18 +67,40 @@ fun MyReceta(
     modifier: Modifier = Modifier,
     onClick: (String) -> Unit
 ) {
-    Column(
-        modifier = modifier.clickable { onClick(receta.id) }
-    ) {
-        Box {
-            AsyncImage(
-                model = receta.urlImagen,
-                contentDescription = receta.nombre,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .aspectRatio(2 / 3f)
-            )
+    Column {
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(receta.urlImagen)
+                .diskCachePolicy(CachePolicy.ENABLED)
+                .build(),
+            error = painterResource(id = R.drawable.broken_image),
+            contentDescription = receta.nombre,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        )
+        Text(
+            text = receta.nombre,
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        )
+        Text(
+            text = receta.descripcion,
+            fontWeight = FontWeight.Normal,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        )
+        Button(
+            onClick = { onClick(receta.id) },
+            modifier = Modifier
+                .padding(8.dp)
+                .align(Alignment.End)
+        ) {
+            Text(text = "Ver en Google Maps")
         }
-        Text(text = receta.nombre)
     }
 }

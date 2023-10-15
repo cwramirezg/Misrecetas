@@ -25,12 +25,9 @@ class MapViewModel @Inject constructor(
         if (id.isNotEmpty()) {
             viewModelScope.launch(Dispatchers.IO) {
                 val receta = mapUseCases.getRecetaByIdUseCase(id)
-                if (receta.lat != 0.0 && receta.lon != 0.0) {
-                    _state.value = _state.value.copy(
-                        lat = receta.lat,
-                        lon = receta.lon
-                    )
-                }
+                _state.value = _state.value.copy(
+                    receta = receta
+                )
             }
         }
     }
