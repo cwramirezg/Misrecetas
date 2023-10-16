@@ -4,7 +4,7 @@
     <style name="Theme.MisRecetas" parent="android:Theme.Material.Light.NoActionBar" />
 
     <style name="Theme.Starting" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">#184195</item>
+        <item name="windowSplashScreenBackground">#FF018786</item>
         <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
         <item name="windowSplashScreenAnimationDuration">300</item>
         <item name="postSplashScreenTheme">@style/Theme.MisRecetas</item>

@@ -42,7 +42,7 @@ android {
             )
         }
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -102,7 +102,7 @@ dependencies {
     kapt("androidx.room:room-compiler:2.5.2")
     implementation("androidx.room:room-runtime:2.5.2")
 
-    implementation("com.google.maps.android:maps-compose:2.11.4")
+    implementation("com.google.maps.android:maps-compose:3.1.1")
     implementation("com.google.android.gms:play-services-maps:18.1.0")
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")

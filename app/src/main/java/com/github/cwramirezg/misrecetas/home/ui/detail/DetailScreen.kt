@@ -67,7 +67,9 @@ fun MyReceta(
     modifier: Modifier = Modifier,
     onClick: (String) -> Unit
 ) {
-    Column {
+    Column(
+        modifier = modifier
+    ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(receta.urlImagen)
