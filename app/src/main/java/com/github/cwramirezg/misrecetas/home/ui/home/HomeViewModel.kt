@@ -24,14 +24,6 @@ class HomeViewModel @Inject constructor(
         getRecetas()
     }
 
-    fun onEvent(event: HomeEvent) {
-        when (event) {
-            is HomeEvent.OnClickReceta -> {
-
-            }
-        }
-    }
-
     private fun getRecetas() {
         viewModelScope.launch(dispatcher) {
             _state.value = HomeState(loading = true)

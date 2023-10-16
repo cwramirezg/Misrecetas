@@ -31,7 +31,7 @@ fun SearchView(state: MutableState<TextFieldValue>) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
-        textStyle = TextStyle(color = Color.White, fontSize = 18.sp),
+        textStyle = TextStyle(color = Color.Black, fontSize = 18.sp),
         leadingIcon = {
             Icon(
                 Icons.Default.Search,
@@ -64,6 +64,6 @@ fun SearchView(state: MutableState<TextFieldValue>) {
 @Preview(showBackground = true)
 @Composable
 fun SearchViewPreview() {
-    val textState = remember { mutableStateOf(TextFieldValue("")) }
+    val textState = remember { mutableStateOf(TextFieldValue("daasd")) }
     SearchView(textState)
 }

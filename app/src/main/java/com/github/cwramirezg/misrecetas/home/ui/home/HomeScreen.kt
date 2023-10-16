@@ -79,6 +79,7 @@ fun HomeScreen(
                     } else {
                         state.recetas.filter {
                             it.nombre.contains(searchedText, ignoreCase = true)
+                            it.descripcion.contains(searchedText, ignoreCase = true)
                         }
                     }
                     if (filter.isNotEmpty()) {

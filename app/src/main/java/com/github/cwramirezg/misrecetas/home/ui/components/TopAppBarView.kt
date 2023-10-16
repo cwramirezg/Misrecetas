@@ -10,6 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 
@@ -21,12 +22,18 @@ fun TopAppBarView(
     imageVector: ImageVector
 ) {
     CenterAlignedTopAppBar(
-        title = { Text(text = textTitle) },
+        title = {
+            Text(
+                text = textTitle,
+                color = Color.White
+            )
+        },
         navigationIcon = {
             IconButton(onClick = { onClick() }) {
                 Icon(
                     imageVector = imageVector,
-                    contentDescription = "Icon navigation"
+                    contentDescription = "Icon navigation",
+                    tint = Color.White
                 )
             }
         },
