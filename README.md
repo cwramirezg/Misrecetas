@@ -36,3 +36,7 @@ bibliotecas importantes para proporcionar una experiencia robusta y escalable.
   generar un módulo (data, domain, ui), en la carpeta ui se encuentra las 3 pantallas principales
   de este feature que son home, detail y map.
 - También cuenta con un splash.
+- Es compatible con JDK 17.
+- Es compatible con Android Studio Giraffe
+- En archivo local.properties se agrega una linea para la clave de google maps:
+  MAPS_API_KEY=############
